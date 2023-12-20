@@ -1,6 +1,7 @@
 
 let dealerSum = 0;
 let yourSum = 0;
+let playerHand = 0;
 
 let dealerAceCount = 0;
 let yourAceCount = 0;
@@ -11,10 +12,11 @@ let deck;
 let canHit = true;
 
 //Starts Game
-window.onload = function () {
+window.onload = function newGame () {
     buildDeck();
     shuffleDeck();
     startGame();
+    trainer();
 }
 
 //Builds the array that will serve as our deck
@@ -78,6 +80,7 @@ function startGame() {
     hidden = deck.pop();
     dealerSum += getValue(hidden);
     dealerAceCount += checkAce(hidden);
+    playerStartingHand();
 
     //Gives the Dealer their first card
     let cardImg = document.createElement("img");
@@ -88,30 +91,53 @@ function startGame() {
     document.getElementById("dealer-cards").append(cardImg);
 
     //Gives the player their first 2 cards
-    for (let i = 0; i < 2; i++) {
-        let cardImg = document.createElement("img");
-        let card = deck.pop();
-        cardImg.src = "./cards/" + card + ".png";
-        yourSum += getValue(card);
-        yourAceCount += checkAce(card);
-        document.getElementById("your-cards").append(cardImg);
+    function playerStartingHand() {
+        for (let i = 0; i < 2; i++) {
+            let cardImg = document.createElement("img");
+            let card = deck.pop();
+            cardImg.src = "./cards/" + card + ".png";
+            playerHand += getValue(card);
+            yourAceCount += checkAce(card);
+            document.getElementById("your-cards").append(cardImg);
+        }
     }
-
     document.getElementById("hit").addEventListener("click", hit);
     document.getElementById("stay").addEventListener("click", stay);
 
 }
 
-function advice() {
-    let strategy = "";
-    
+// Gives Advice based on player starting hand
+function trainer() {
+    let message = "";
 
+    if (playerHand == 20) {
+        message = "Right on you have 20! the only hand that can beat you is 21 so let's stay and hope Dealer busts!";
+    }
+    else if (playerHand == 21) {
+        message = "Hazzzah! 21! No way you can mess this up";
+    }
+    else if (playerHand >= 17) {
+        message = "Dude you'd be crazy to hit on anything over a 17";
+    }
+
+    else if (playerHand < 17 & playerHand >= 13) {
+        message = "if the dealer is showing anything less than a 7 you should stay, dealer has a high probability of busting if they're showing a 7 or better let's fight for the hand";
+    }
+    else if (playerHand <= 12) {
+        message = "You need to hit on anything under 11 you should also double on any 11 you get when you can";
+    }
+    document.getElementById("advice").innerText = message;
 }
 
+
+
+// gives the player another card
 function hit() {
     if (!canHit) {
         return;
     }
+
+    let playerHand = yourSum;
 
     let cardImg = document.createElement("img");
     let card = deck.pop();
@@ -126,13 +152,14 @@ function hit() {
 
 }
 
+//ends game
 function stay() {
     dealerSum = reduceAce(dealerSum, dealerAceCount);
-    yourSum = reduceAce(yourSum, yourAceCount);
+    yourSum = reduceAce(yourSum + playerHand, yourAceCount);
 
     canHit = false;
     document.getElementById("hidden").src = "./cards/" + hidden + ".png";
-
+    //deals the rest of dealers hand
     while (dealerSum < 17) {
         let cardImg = document.createElement("img");
         let card = deck.pop();
@@ -141,7 +168,7 @@ function stay() {
         dealerAceCount += checkAce(card);
         document.getElementById("dealer-cards").append(cardImg);
     }
-
+    //announces winner
     let message = "";
 
     if (yourSum > 21) {
@@ -153,7 +180,7 @@ function stay() {
     }
 
     else if (yourSum == dealerSum) {
-        message = "Tie!";
+        message = "Push!";
     }
     else if (yourSum > dealerSum) {
         message = "You Win!";
@@ -166,5 +193,3 @@ function stay() {
     document.getElementById("your-sum").innerText = yourSum;
     document.getElementById("results").innerText = message;
 }
-
-

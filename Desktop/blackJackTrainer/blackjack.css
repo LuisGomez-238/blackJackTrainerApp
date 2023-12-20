@@ -6,22 +6,28 @@ body {
     text-align: center;
 }
 
-#jackBlack {
+/* #jackBlack {
     min-width: 100px;
     max-width: 100px;
     min-height: 100px;
     display: flex;
     align-items: start;
-    padding: 10px;
-}
+} */
 
-#trainer {
-    background-color:rgb(107, 164, 107) ;
+#coach {
+    background-color:rgb(107, 164, 107);
+}
+#advice {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+
 }
 
 #dealer-cards img,
 #your-cards img {
-    max-width: 15%;
+    max-width: 20%;
     height: auto;
     margin: 1px;
 }
@@ -36,8 +42,12 @@ body {
     margin-bottom: 10px;
 }
 
-#bet {
+#bet, #bets {
     background-color: transparent;
+    border-radius: 100px;
+    stroke: none;
+    display: flex;
+    justify-content: center;
 }
 #chip {
     max-width: 100px;
@@ -59,16 +69,4 @@ body {
     align-items: center;
     justify-content: center;
     justify-content: space-evenly;
-}
-
-@media (min-width: 600px) {
-    /* Adjust styles for larger screens if needed */
-    #hit,
-    #stay {
-        font-size: 20px;
-    }
-
-    #results {
-        font-size: 100px;
-    }
 }
