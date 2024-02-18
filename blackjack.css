@@ -1,0 +1,45 @@
+#coach {
+    /* background-color: aquamarine; */
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.row {
+    justify-content: center;
+}
+#advice {
+    display: flex;
+    justify-content: center;
+    font-size: 1.5rem;
+    width: 50%;
+    /* background-color: aliceblue; */
+}
+#hidden {
+    width: 15%;
+    height: auto;
+    margin: 2rem;
+    margin-top: 0;
+}
+img {
+    width: 15%;
+    height: auto;
+    margin: 2rem;
+    margin-top: 0;
+}
+h2 {
+    display: flex;
+    justify-content: center;
+}
+#buttons {
+    display: flex;
+    justify-content: center;
+}
+#hit, #stay{
+    display: flex;
+    justify-content: center;
+    margin: 2rem;
+    width: 10rem;
+    height: auto;
+    border-radius: 15px;
+    margin-top: 0;
+}
